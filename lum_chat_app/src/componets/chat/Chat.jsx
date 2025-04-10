@@ -2,7 +2,7 @@ import "./chat.css";
 import EmojiPicker from 'emoji-picker-react';
 import { useEffect, useRef, useState } from "react";
 /* ДОБАВЛЕНО: Импорт Supabase */
-import { supabase } from "../../lib/supabaseClient";
+import supabase from "../../helper/supabaseClient";
 
 const Chat = () => {
   const [open, setOpen] = useState(false);

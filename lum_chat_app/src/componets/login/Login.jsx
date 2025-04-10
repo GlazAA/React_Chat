@@ -8,7 +8,7 @@ import { auth } from "../../lib/firebase";
 */
 
 /* ДОБАВЛЕНО: Supabase-клиент */
-import { supabase } from "../../lib/supabaseClient";
+import supabase from "../../helper/supabaseClient";
 
 const Login = () => {
   const [avatar, setAvatar] = useState({

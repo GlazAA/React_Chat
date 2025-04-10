@@ -2,7 +2,7 @@ import AddUser from "./addUser/addUser";
 import "./chatList.css"
 import { useState } from "react";
 
-const ChatList = () => {
+const ChatList = ({setUser}) => {
     const [addMode, setAddMode] = useState(false)
     return (
       <div className="chatList">

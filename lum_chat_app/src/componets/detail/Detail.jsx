@@ -1,25 +1,7 @@
+import { auth } from "../../lib/firebase"
 import "./detail.css"
-import supabase from "../../helper/supabaseClient"
-import { useState } from "react"
 
 const Detail = () => {
-  //вставлено вместе с userinfo 10/04
-  const handleLogout = async () => {
-    try {
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        console.error("Error logging out:", error);
-      } else {
-        // Optionally, you can redirect the user or update the UI here
-        console.log("User logged out successfully");
-      }
-    } catch (error) {
-      console.error("Error during logout:", error.message);
-    }setUser(null)
-  }
-
-
-
   return (
     <div className="detail">
       <div className="user">
@@ -83,7 +65,7 @@ const Detail = () => {
           </div>
         </div>
         <button>Block User</button>
-        <button className="logout" onClick={handleLogout}>Logout</button>
+        <button className="logout" onClick={()=>auth.signOut()}>Logout</button>
       </div>
     </div>
   )

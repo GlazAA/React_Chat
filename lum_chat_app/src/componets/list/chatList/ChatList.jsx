@@ -1,9 +1,16 @@
+import { useUserStore } from "../../../lib/userStore";
 import AddUser from "./addUser/addUser";
 import "./chatList.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const ChatList = ({setUser}) => {
+const ChatList = () => {
     const [addMode, setAddMode] = useState(false)
+
+    const { currentUser } = useUserStore()
+
+    useEffect(() => {
+
+    }, [])
     return (
       <div className="chatList">
         <div className="search">

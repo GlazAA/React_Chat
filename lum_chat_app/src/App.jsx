@@ -1,44 +1,46 @@
-import { useState, useEffect } from "react";
-import supabase from "./helper/supabaseClient";
+import { useEffect } from "react"
 import Chat from "./componets/chat/Chat"
 import Detail from "./componets/detail/Detail"
 import List from "./componets/list/List"
 import Login from "./componets/login/Login"
 import Notification from "./componets/notification/Notification"
+import { onAuthStateChanged } from "firebase/auth"
+import { auth } from "./lib/firebase"
+import { useUserStore } from "./lib/userStore"
 
 const App = () => {
-  const [user, setUser] = useState(null);
-  //проверка на пользователя
+
+  const {currentUser, isLoading, fetchUserInfo} = useUserStore()
 
   useEffect(() => {
-    // Проверка текущей сессии пользователя
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user || null);
+    const unSub = onAuthStateChanged(auth, (user) => {
+      fetchUserInfo(user?.uid);
     });
 
-    // Подписка на изменения аутентификации
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user || null);
-    });
+    return () => {
+      unSub();
+    }
 
-    return () => subscription.unsubscribe();
-  }, []);
+  }, [fetchUserInfo])
 
+  console.log(currentUser)
+
+  if (isLoading) return <div className="loading">Loading...</div>
 
   return (
     <div className="container">
       {
-        user ? (
+        currentUser ? (
           <>
-            <List user={user} setUser={setUser} />
+            <List />
             <Chat />
             <Detail />
           </>
         ) : (
-        <Login />
-      )}
-      <Notification/>
-      
+          <Login />
+        )}
+      <Notification />
+
     </div>
   )
 }
